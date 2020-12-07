@@ -43,10 +43,11 @@ Range("A" & SearchRange.Rows.Count + 1).Value = Item
         On Error GoTo 0
     
             If Not rFound Is Nothing Then
-'Writes the Product Name and puts 1 to the Quantity column:
-            description = Expression.InputBox(_prompt:="Enter a product description:", Type:=2)
-            Range("B" & SearchRange.Rows.Count).Value = description
-            Range("C" & SearchRange.Rows.Count).Value = 1
+'Has user input Product name and specify Quantity Amount :
+            Description = Application.InputBox(prompt:="Enter a product Description:", Type:=2)
+            Range("B" & SearchRange.Rows.Count + 1).Value = Description
+            Quantity =  Application.InputBox(prompt:="Enter Product Quantity :", Type:=2)
+            Range("C" & SearchRange.Rows.Count + 1).Value = Quantity
             End If
     End With
 End If
@@ -55,4 +56,3 @@ End If
 Application.EnableEvents = True
 
 End Sub
-
