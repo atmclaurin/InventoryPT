@@ -45,7 +45,7 @@ Range("A" & SearchRange.Rows.Count + 1).Value = Item
             If Not rFound Is Nothing Then
 'Writes the Product Name and puts 1 to the Quantity column:
             description = Expression.InputBox(_prompt:="Enter a product description:", Type:=2)
-            Range("B" & SearchRange.Rows.Count).Value = Description
+            Range("B" & SearchRange.Rows.Count).Value = description
             Range("C" & SearchRange.Rows.Count).Value = 1
             End If
     End With
