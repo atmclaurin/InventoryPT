@@ -1,0 +1,58 @@
+Private Sub Worksheet_Change(ByVal Target As Range)
+
+Dim Item As String
+Dim SearchRange As Range
+Dim rFound As Range
+
+'Don't run the macro if:
+'Target is not a single cell:
+If Target.Cells.Count > 1 Then Exit Sub
+'or Target belongs to the A1.CurrentRegion:
+If Not Intersect(Target, Range("A1").CurrentRegion) Is Nothing Then Exit Sub
+
+'Avoid the endless loop:
+Application.EnableEvents = False
+
+'Looks for matches from the here first:
+Set SearchRange = Range("A1:A" & Range("A1").CurrentRegion.Rows.Count)
+    
+Item = Target.Value
+
+'Clears the Target:
+Target.Value = ""
+
+If Application.WorksheetFunction.CountIf(SearchRange, Item) > 0 Then
+'There's a match already:
+    Set rFound = Columns(1).Find(What:=Item, After:=Cells(1, 1) _
+            , LookIn:=xlValues, LookAt:=xlPart, SearchOrder:=xlByRows _
+            , SearchDirection:=xlNext, MatchCase:=False, SearchFormat:=False)
+'Adds one to the Quantity:
+        rFound.Offset(0, 2).Value = rFound.Offset(0, 2).Value - 1
+
+Else
+
+'Writes the value for the Barcode-list:
+Range("A" & SearchRange.Rows.Count - 1).Value = Item
+
+'Looks for the match from sheet "Inventory" column A
+    With Sheets("Inventory")
+        Set rFound = .Columns(1).Find(What:=Item, After:=.Cells(1, 1) _
+                , LookIn:=xlValues, LookAt:=xlPart, SearchOrder:=xlByRows _
+                , SearchDirection:=xlNext, MatchCase:=False, SearchFormat:=False)
+    
+        On Error GoTo 0
+    
+            If Not rFound Is Nothing Then
+'Writes the Product Name and puts 1 to the Quantity column:
+                Range("A" & Rows.Count).End(xlUp).Offset(1).Select
+                Range("B" & SearchRange.Rows.Count + 1).Value = rFound.Offset(0, 1).Value
+                Range("C" & SearchRange.Rows.Count + 1).Value = 1
+            End If
+    End With
+End If
+
+'Enable the Events again:
+Application.EnableEvents = True
+
+End Sub
+
