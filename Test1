@@ -32,7 +32,7 @@ If Application.WorksheetFunction.CountIf(SearchRange, Item) > 0 Then
 Else
 
 'Writes the value for the Barcode-list:
-Range("A" & SearchRange.Rows.Count - 1).Value = Item
+Range("A" & SearchRange.Rows.Count + 1).Value = Item
 
 'Looks for the match from sheet "Inventory" column A
     With Sheets("Inventory")
@@ -44,9 +44,9 @@ Range("A" & SearchRange.Rows.Count - 1).Value = Item
     
             If Not rFound Is Nothing Then
 'Writes the Product Name and puts 1 to the Quantity column:
-                Range("A" & Rows.Count).End(xlUp).Offset(1).Select
-                Range("B" & SearchRange.Rows.Count + 1).Value = rFound.Offset(0, 1).Value
-                Range("C" & SearchRange.Rows.Count + 1).Value = 1
+description = Expression.InputBox(_prompt:="Enter a product description:", Type:=2)
+Range("B" & SearchRange.Rows.Count).Value = Description
+Range("C" & SearchRange.Rows.Count).Value = 1
             End If
     End With
 End If
