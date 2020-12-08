@@ -3,6 +3,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
 Dim Item As String
 Dim SearchRange As Range
 Dim rFound As Range
+Dim answer As Integer
 
 'Don't run the macro if:
 'Target is not a single cell:
@@ -26,8 +27,12 @@ If Application.WorksheetFunction.CountIf(SearchRange, Item) > 0 Then
     Set rFound = Columns(1).Find(What:=Item, After:=Cells(1, 1) _
             , LookIn:=xlValues, LookAt:=xlPart, SearchOrder:=xlByRows _
             , SearchDirection:=xlNext, MatchCase:=False, SearchFormat:=False)
-'Adds one to the Quantity:
-        rFound.Offset(0, 2).Value = rFound.Offset(0, 2).Value - 1
+'Determines is user wants to add quantity to inventory:
+answer = MsgBox("Would you like to Add to Inventory", vbQuestion + vbYesNo + vbDefaultButton2, "Inventory Quantity Adjustment")
+If answer = vbYes Then
+    toAdd = Application.InputBox(prompt:="How Many?", Type:=1)
+'Adds answer to the Quantity:
+    rFound.Offset(0, 2).Value = rFound.Offset(0, 2).Value + toAdd
 
 Else
 
@@ -56,5 +61,7 @@ End If
 Application.EnableEvents = True
 
 End Sub
+
+
 
 
