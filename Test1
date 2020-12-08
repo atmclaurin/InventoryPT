@@ -49,7 +49,9 @@ If Application.WorksheetFunction.CountIf(SearchRange, Item) > 0 Then
     End If
         answer = vbCancel
  
-        Else
+   End If
+ 
+ Else
             'Writes the value for the Barcode-list:
             Range("A" & SearchRange.Rows.Count - 1).Value = Item
 
