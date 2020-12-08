@@ -46,7 +46,7 @@ Range("A" & SearchRange.Rows.Count + 1).Value = Item
 'Has user input Product name and specify Quantity Amount :
             Description = Application.InputBox(prompt:="Enter a product Description:", Type:=2)
             Range("B" & SearchRange.Rows.Count + 1).Value = Description
-            Quantity =  Application.InputBox(prompt:="Enter Product Quantity :", Type:=2)
+            Quantity = Application.InputBox(prompt:="Enter Product Quantity :", Type:=2)
             Range("C" & SearchRange.Rows.Count + 1).Value = Quantity
             End If
     End With
@@ -56,3 +56,5 @@ End If
 Application.EnableEvents = True
 
 End Sub
+
+
