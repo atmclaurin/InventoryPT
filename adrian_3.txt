@@ -11,4 +11,7 @@ If answer = vbYes Then
     rFound.Offset(0, 2).Value = rFound.Offset(0, 2).Value + toAdd
 Else
   // then
-answer = MsgBox("Subtract From Inventory", vbOKCancel, "Inventory Quantity Adjustment")
+answer = MsgBox("Subtract From Inventory", vbOKOnly, "Inventory Quantity Adjustment")
+	toRemove = Application.InputBox(prompt:="How Many?", Type:=1)
+'Subtracts Answer from Quantity'
+	rFound.Offset(0, 2).Value = rFound.Offset(0, 2).Value + toRemove
