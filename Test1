@@ -43,13 +43,13 @@ If Application.WorksheetFunction.CountIf(SearchRange, Item) > 0 Then
         toRemove = Application.InputBox(prompt:="How Many?", Type:=1)
         
         'Subtracts answer from the inventory:
-         rFound.Offset(0, 2).Value = rFound.Offset(0, 2).Value + toAdd
+         rFound.Offset(0, 2).Value = rFound.Offset(0, 2).Value - toRemove
         
         
     End If
         answer = vbCancel
         
-Else
+If Application.WorksheetFunction.CountIf(SearchRange, Item) = 0 Then
     'Writes the value for the Barcode-list:
     Range("A" & SearchRange.Rows.Count + 1).Value = Item
     
@@ -57,7 +57,7 @@ Else
     With Sheets("Inventory")
         Set rFound = .Columns(1).Find(What:=Item, After:=.Cells(1, 1) _
                 , LookIn:=xlValues, LookAt:=xlPart, SearchOrder:=xlByRows _
-                , SearchDirection:=xlNext, MatchCase:=False, SearchFormat:=False))
+                , SearchDirection:=xlNext, MatchCase:=False, SearchFormat:=False)
     
         On Error GoTo 0
     
@@ -76,11 +76,6 @@ End If
 Application.EnableEvents = True
 
 End Sub
-        
-        
 
-'Enable the Events again:
-Application.EnableEvents = True
 
-End Sub
 
