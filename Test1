@@ -48,27 +48,25 @@ If Application.WorksheetFunction.CountIf(SearchRange, Item) > 0 Then
         
     End If
         answer = vbCancel
-        
-If Application.WorksheetFunction.CountIf(SearchRange, Item) = 0 Then
-    'Writes the value for the Barcode-list:
-    Range("A" & SearchRange.Rows.Count + 1).Value = Item
-    
-    'Looks for the match from sheet "Inventory" column A
-    With Sheets("Inventory")
-        Set rFound = .Columns(1).Find(What:=Item, After:=.Cells(1, 1) _
-                , LookIn:=xlValues, LookAt:=xlPart, SearchOrder:=xlByRows _
-                , SearchDirection:=xlNext, MatchCase:=False, SearchFormat:=False)
+ 
+        Else
+            'Writes the value for the Barcode-list:
+            Range("A" & SearchRange.Rows.Count - 1).Value = Item
+
+                'Looks for the match from sheet "Inventory" column A
+                 With Sheets("Inventory")
+                    Set rFound = .Columns(1).Find(What:=Item, After:=.Cells(1, 1) _
+                    , LookIn:=xlValues, LookAt:=xlPart, SearchOrder:=xlByRows _
+                    , SearchDirection:=xlNext, MatchCase:=False, SearchFormat:=False)
     
         On Error GoTo 0
     
-        If Not rFound Is Nothing Then
-            'Has user input Product name and specify Quantity Amount :
-            Description = Application.InputBox(prompt:="Enter a product Description:", Type:=2)
-            Range("B" & SearchRange.Rows.Count + 1).Value = Description
-
-            Quantity = Application.InputBox(prompt:="Enter Product Quantity :", Type:=2)
-            Range("C" & SearchRange.Rows.Count + 1).Value = Quantity
-        End If
+            If Not rFound Is Nothing Then
+            'Writes the Product Name and puts 1 to the Quantity column:
+                Range("A" & Rows.Count).End(xlUp).Offset(1).Select
+                Range("B" & SearchRange.Rows.Count + 1).Value = rFound.Offset(0, 1).Value
+                Range("C" & SearchRange.Rows.Count + 1).Value = 1
+            End If
     End With
 End If
 
