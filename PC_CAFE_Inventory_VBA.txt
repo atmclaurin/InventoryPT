@@ -27,6 +27,16 @@ If Application.WorksheetFunction.CountIf(SearchRange, Item) > 0 Then
     Set rFound = Columns(1).Find(What:=Item, After:=Cells(1, 1) _
             , LookIn:=xlValues, LookAt:=xlPart, SearchOrder:=xlByRows _
             , SearchDirection:=xlNext, MatchCase:=False, SearchFormat:=False)
+
+    ' 3: RED
+    ' 7: PURPLE
+    ' 45: ORANGE
+    If rFound.Interior.ColorIndex = 3 Or rFound.Interior.ColorIndex = 7 Or rFound.Interior.ColorIndex = 45 Then
+        serialNumber = Application.InputBox(prompt:="Serial Number: ", Type:=1)
+        userId = Application.InputBox(prompt:="User ID: ", Type:=1)
+
+        ' Select output cell
+        ' Set serialNumber, userId, and date
     
     'Determines is user wants to add quantity to inventory:
     answer = MsgBox("Would you like to Add to Inventory", vbQuestion + vbYesNo + vbDefaultButton2, "Inventory Quantity Adjustment")
